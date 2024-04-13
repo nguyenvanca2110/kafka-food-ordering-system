@@ -4,13 +4,16 @@ administrator
 yen@ypworks.vn 123vovn
 
 1) MongoDB Docker
-docker run --name mongodb-container -v /Volumes/YenData/FA/Management/Info/local_env/mongodb_data:/data/db -d -p 27017:27017 mongo
+docker create volume mongodb_data
+docker run --name mongodb-container -v mongodb_data:/data/db -d -p 27017:27017 mongo
 
 2) Redis Docker
 https://www.docker.com/blog/how-to-use-the-redis-docker-official-image/
 
+docker create volume redis-data
+
 docker run --name local-redis \
-    -v /Volumes/YenData/FA/Management/Info/local_env/redis-data:/data \
+    -v redis-data:/data \
     -p 6379:6379 -d redis \
     redis-server --save 60 1 --loglevel warning
 
@@ -23,8 +26,10 @@ https://github.com/conduktor/kafka-stack-docker-compose/blob/master/conduktor.ym
 docker run -it -p 8080:8080 -e DYNAMIC_CONFIG_ENABLED=true provectuslabs/kafka-ui
 
 4) POSTGRES
-docker run --name local-postgres -e POSTGRES_PASSWORD=yenbx88 -e POSTGRES_USER=yenbx88 -p 5433:5432 \
-    -v /Volumes/YenData/FA/Management/Info/local_env/pg-data:/var/lib/postgresql/data -d postgres
+docker create volume pg-data
+
+docker run --name local-postgres -e POSTGRES_PASSWORD=canv2110 -e POSTGRES_USER=canv2110 -p 5433:5432 \
+    -v pg-data:/var/lib/postgresql/data -d postgres
 
 https://medium.com/@basit26374/how-to-run-postgresql-in-docker-container-with-volume-bound-c141f94e4c5a
 https://judo0179.tistory.com/96
